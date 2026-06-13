@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Saldo Card – Support & Account Deletion</title>
+  <meta name="description" content="Saldo Card support information and account deletion instructions." />
+  <style>
+    :root {
+      --bg: #0b1220;
+      --bg-soft: #111a2b;
+      --card: rgba(17, 26, 43, 0.78);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --text: #eef4ff;
+      --muted: #aab7cf;
+      --accent: #4f8cff;
+      --accent-2: #7a5cff;
+      --success: #1fbf75;
+      --danger: #ff5d73;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      --radius: 24px;
+      --radius-sm: 16px;
+      --max: 1100px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(79, 140, 255, 0.24), transparent 28%),
+        radial-gradient(circle at top right, rgba(122, 92, 255, 0.18), transparent 26%),
+        linear-gradient(180deg, #09101c 0%, #0b1220 45%, #0d1524 100%);
+      line-height: 1.65;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(calc(100% - 32px), var(--max));
+      margin: 0 auto;
+    }
+
+    .hero {
+      padding: 72px 0 32px;
+    }
+
+    .hero-card {
+      position: relative;
+      overflow: hidden;
+      padding: 40px;
+      border-radius: 32px;
+      background: linear-gradient(135deg, rgba(79, 140, 255, 0.15), rgba(122, 92, 255, 0.12)), var(--card);
+      border: 1px solid var(--card-border);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: auto -60px -60px auto;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(79, 140, 255, 0.35), transparent 70%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #d8e4ff;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 4.5vw, 3.8rem);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
+
+    .subtitle {
+      max-width: 760px;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 20px;
+      border-radius: 14px;
+      font-weight: 700;
+      transition: transform .18s ease, opacity .18s ease, background .18s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      opacity: 0.96;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #fff;
+      box-shadow: 0 10px 24px rgba(79, 140, 255, 0.28);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .section {
+      padding: 18px 0 24px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 20px;
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .card h2, .card h3 {
+      margin-top: 0;
+      letter-spacing: -0.02em;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .feature {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .icon {
+      flex: 0 0 44px;
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(79, 140, 255, 0.18), rgba(122, 92, 255, 0.18));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 20px;
+    }
+
+    .contact-list, .steps, .notes {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .contact-list li,
+    .steps li,
+    .notes li {
+      margin: 10px 0;
+      color: var(--muted);
+    }
+
+    .contact-box {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 18px;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .contact-item strong {
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .02em;
+    }
+
+    .tag-ok {
+      background: rgba(31, 191, 117, 0.14);
+      color: #97f1c1;
+      border: 1px solid rgba(31, 191, 117, 0.24);
+    }
+
+    .tag-danger {
+      background: rgba(255, 93, 115, 0.12);
+      color: #ffb3bf;
+      border: 1px solid rgba(255, 93, 115, 0.22);
+    }
+
+    .footer {
+      padding: 18px 0 56px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .small {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 900px) {
+      .grid-3,
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 36px;
+      }
+
+      .hero-card {
+        padding: 26px;
+      }
+
+      .contact-item {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="container">
+      <div class="hero-card">
+        <div class="eyebrow">Saldo Card • dev.of.beirut.com • 12-06-2026</div>
+        <h1>Support, account deletion, and app information</h1>
+        <p class="subtitle">
+          Saldo Card is designed for phone store owners to showcase available devices for sale,
+          offer recharge keys for Lebanese and other phone lines, and simplify purchases using an
+          in-app balance that cannot be used outside the application.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#delete-account">Delete Account</a>
+          <a class="btn btn-secondary" href="#support">Contact Support</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="container grid grid-3">
+        <article class="card feature">
+          <div class="icon">📱</div>
+          <div>
+            <h3>Device showcase</h3>
+            <p class="muted">Display available devices for sale in a clear and organized way for store owners and customers.</p>
+          </div>
+        </article>
+        <article class="card feature">
+          <div class="icon">⚡</div>
+          <div>
+            <h3>Recharge key sales</h3>
+            <p class="muted">Sell keys for Lebanese and other phone lines through a simple and efficient in-app workflow.</p>
+          </div>
+        </article>
+        <article class="card feature">
+          <div class="icon">💳</div>
+          <div>
+            <h3>Internal balance only</h3>
+            <p class="muted">The in-app balance is used only inside Saldo Card and cannot be transferred or used outside the app.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="support" class="section">
+      <div class="container grid grid-2">
+        <article class="card">
+          <h2>Customer support</h2>
+          <p class="muted">
+            You can contact Saldo Card support at any time if you encounter any issue while using the app.
+            You can also press the <strong>Support</strong> button on the <strong>Store Code</strong> page and choose to communicate by email or phone.
+          </p>
+
+          <div class="contact-box">
+            <div class="contact-item">
+              <div>
+                <strong>Email</strong>
+                <span class="muted">malltech.support.leb@hotmail.com</span>
+              </div>
+              <a class="btn btn-secondary" href="mailto:malltech.support.leb@hotmail.com">Send Email</a>
+            </div>
+
+            <div class="contact-item">
+              <div>
+                <strong>Phone</strong>
+                <span class="muted">+96179316053</span>
+              </div>
+              <a class="btn btn-secondary" href="tel:+96179316053">Call Support</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <h2>Important information</h2>
+          <ul class="notes">
+            <li>The most common issue is losing internet connection while using the app.</li>
+            <li>Saldo Card does not function without an internet connection.</li>
+            <li>Users cannot interact with the app until the internet connection is restored.</li>
+            <li>Please do not hesitate to contact support if you need assistance.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="delete-account" class="section">
+      <div class="container grid grid-2">
+        <article class="card">
+          <h2>How to delete an account</h2>
+
+          <h3>1. From the Home Page</h3>
+          <ol class="steps">
+            <li>Open the drawer by pressing the menu icon.</li>
+            <li>Locate and select the <strong>Delete Account</strong> button, highlighted in red.</li>
+          </ol>
+
+          <h3>2. From the Store Page</h3>
+          <ol class="steps">
+            <li>Press the settings icon.</li>
+            <li>Locate and select the <strong>Delete Account</strong> button, highlighted in red.</li>
+          </ol>
+        </article>
+
+        <article class="card">
+          <h2>Confirmation and data removal</h2>
+          <p class="muted">
+            When you press the <strong>Delete Account</strong> button, a confirmation prompt will appear.
+            If you want to permanently delete your account, press <strong>Yes</strong> to confirm.
+          </p>
+
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin: 14px 0 18px;">
+            <span class="tag tag-danger">Permanent action</span>
+            <span class="tag tag-ok">Manual confirmation required</span>
+          </div>
+
+          <ul class="notes">
+            <li>Deleting your account permanently removes all your data from our database.</li>
+            <li>This action is irreversible.</li>
+            <li>Once your data is deleted, it cannot be recovered.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© Saldo Card • dev.of.beirut.com • 12-06-2026</p>
+      <p class="small">Modern support and account deletion page for Saldo Card.</p>
+    </div>
+  </footer>
+</body>
+</html>
